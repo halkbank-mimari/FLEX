@@ -23,6 +23,7 @@
 
 @property (nonatomic, readonly) NSMutableArray<FLEXGlobalsEntry *> *userGlobalEntries;
 @property (nonatomic, readonly) NSMutableDictionary<NSString *, FLEXCustomContentViewerFuture> *customContentTypeViewers;
+@property (nonatomic, readwrite) BOOL hostDeny;
 
 @end
 
@@ -155,6 +156,12 @@
 
 - (void)explorerViewControllerDidFinish:(FLEXExplorerViewController *)explorerViewController {
     [self hideExplorer];
+}
+
+#pragma mark - FLEXNetworkMITMViewControllerDelegate
+
+- (void)enableHostDenyExcludeButton:(BOOL *)state {
+    self.hostDeny = state;
 }
 
 @end

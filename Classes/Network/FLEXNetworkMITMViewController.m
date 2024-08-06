@@ -22,6 +22,7 @@
 #import "UIBarButtonItem+FLEX.h"
 #import "FLEXResources.h"
 #import "NSUserDefaults+FLEX.h"
+#import "FLEXManager.h"
 
 #define kFirebaseAvailable NSClassFromString(@"FIRDocumentReference")
 #define kWebsocketsAvailable @available(iOS 13.0, *)
@@ -552,34 +553,36 @@ typedef NS_ENUM(NSInteger, FLEXNetworkObserverMode) {
     return [UIContextMenuConfiguration
         configurationWithIdentifier:nil
         previewProvider:nil
-        actionProvider:^UIMenu *(NSArray<UIMenuElement *> *suggestedActions) {
-            UIAction *copy = [UIAction
-                actionWithTitle:@"Copy URL"
-                image:nil
-                identifier:nil
-                handler:^(__kindof UIAction *action) {
-                    UIPasteboard.generalPasteboard.string = transaction.copyString;
-                }
-            ];
+            actionProvider:^UIMenu *(NSArray<UIMenuElement *> *suggestedActions) {
+      UIAction *copy = [UIAction
+                        actionWithTitle:@"Copy URL"
+                        image:nil
+                        identifier:nil
+                        handler:^(__kindof UIAction *action) {
+        UIPasteboard.generalPasteboard.string = transaction.copyString;
+      }
+      ];
+      
+      NSArray *children = @[copy];
+      if (self.mode == FLEXNetworkObserverModeREST) {
+        if (FLEXManager.sharedManager.hostDeny == true) {
+          NSURLRequest *request = [self HTTPTransactionAtIndexPath:indexPath].request;
+          UIAction *denylist = [UIAction
+                                actionWithTitle:[NSString stringWithFormat:@"Exclude '%@'", request.URL.host]
+                                image:nil
+                                identifier:nil
+                                handler:^(__kindof UIAction *action) {
+            NSMutableArray *denylist =  FLEXNetworkRecorder.defaultRecorder.hostDenylist;
+            [denylist addObject:request.URL.host];
+            [FLEXNetworkRecorder.defaultRecorder clearExcludedTransactions];
+            [FLEXNetworkRecorder.defaultRecorder synchronizeDenylist];
+            [self tryUpdateTransactions];
+          }
+        ];
         
-            NSArray *children = @[copy];
-            if (self.mode == FLEXNetworkObserverModeREST) {
-                NSURLRequest *request = [self HTTPTransactionAtIndexPath:indexPath].request;
-                UIAction *denylist = [UIAction
-                    actionWithTitle:[NSString stringWithFormat:@"Exclude '%@'", request.URL.host]
-                    image:nil
-                    identifier:nil
-                    handler:^(__kindof UIAction *action) {
-                        NSMutableArray *denylist =  FLEXNetworkRecorder.defaultRecorder.hostDenylist;
-                        [denylist addObject:request.URL.host];
-                        [FLEXNetworkRecorder.defaultRecorder clearExcludedTransactions];
-                        [FLEXNetworkRecorder.defaultRecorder synchronizeDenylist];
-                        [self tryUpdateTransactions];
-                    }
-                ];
-                
-                children = [children arrayByAddingObject:denylist];
-            }
+        children = [children arrayByAddingObject:denylist];
+      }
+    }
             return [UIMenu
                 menuWithTitle:@"" image:nil identifier:nil
                 options:UIMenuOptionsDisplayInline
