@@ -16,6 +16,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (nonatomic, readonly) BOOL isHidden;
 @property (nonatomic, readonly) FLEXExplorerToolbar *toolbar;
+@property (nonatomic, readonly) BOOL hostDeny;
 
 - (void)showExplorer;
 - (void)hideExplorer;
@@ -42,6 +43,9 @@ NS_ASSUME_NONNULL_BEGIN
 /// Use this to present the explorer in a specific scene when the one
 /// it chooses by default is not the one you wish to display it in.
 - (void)showExplorerFromScene:(UIWindowScene *)scene API_AVAILABLE(ios(13.0));
+
+
+- (void)enableHostDenyExcludeButton:(BOOL *)state;
 
 #pragma mark - Misc
 
