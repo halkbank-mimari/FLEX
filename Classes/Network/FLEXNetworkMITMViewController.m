@@ -563,23 +563,23 @@ typedef NS_ENUM(NSInteger, FLEXNetworkObserverMode) {
             ];
         
             NSArray *children = @[copy];
-            if (self.mode == FLEXNetworkObserverModeREST) {
-                NSURLRequest *request = [self HTTPTransactionAtIndexPath:indexPath].request;
-                UIAction *denylist = [UIAction
-                    actionWithTitle:[NSString stringWithFormat:@"Exclude '%@'", request.URL.host]
-                    image:nil
-                    identifier:nil
-                    handler:^(__kindof UIAction *action) {
-                        NSMutableArray *denylist =  FLEXNetworkRecorder.defaultRecorder.hostDenylist;
-                        [denylist addObject:request.URL.host];
-                        [FLEXNetworkRecorder.defaultRecorder clearExcludedTransactions];
-                        [FLEXNetworkRecorder.defaultRecorder synchronizeDenylist];
-                        [self tryUpdateTransactions];
-                    }
-                ];
-                
-                children = [children arrayByAddingObject:denylist];
-            }
+//            if (self.mode == FLEXNetworkObserverModeREST) {
+//                NSURLRequest *request = [self HTTPTransactionAtIndexPath:indexPath].request;
+//                UIAction *denylist = [UIAction
+//                    actionWithTitle:[NSString stringWithFormat:@"Exclude '%@'", request.URL.host]
+//                    image:nil
+//                    identifier:nil
+//                    handler:^(__kindof UIAction *action) {
+//                        NSMutableArray *denylist =  FLEXNetworkRecorder.defaultRecorder.hostDenylist;
+//                        [denylist addObject:request.URL.host];
+//                        [FLEXNetworkRecorder.defaultRecorder clearExcludedTransactions];
+//                        [FLEXNetworkRecorder.defaultRecorder synchronizeDenylist];
+//                        [self tryUpdateTransactions];
+//                    }
+//                ];
+//                
+//                children = [children arrayByAddingObject:denylist];
+//            }
             return [UIMenu
                 menuWithTitle:@"" image:nil identifier:nil
                 options:UIMenuOptionsDisplayInline

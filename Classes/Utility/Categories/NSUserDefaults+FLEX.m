@@ -17,7 +17,7 @@ NSString * const kFLEXDefaultsShowMethodOverridesKey = @"com.flipboard.FLEX.show
 NSString * const kFLEXDefaultsHideVariablePreviewsKey = @"com.flipboard.FLEX.hide_variable_previews";
 NSString * const kFLEXDefaultsNetworkObserverEnabledKey = @"com.flex.FLEXNetworkObserver.enableOnLaunch";
 NSString * const kFLEXDefaultsNetworkObserverLastModeKey = @"com.flex.FLEXNetworkObserver.lastMode";
-NSString * const kFLEXDefaultsNetworkHostDenylistKey = @"com.flipboard.FLEX.network_host_denylist";
+//NSString * const kFLEXDefaultsNetworkHostDenylistKey = @"com.flipboard.FLEX.network_host_denylist";
 NSString * const kFLEXDefaultsDisableOSLogForceASLKey = @"com.flipboard.FLEX.try_disable_os_log";
 NSString * const kFLEXDefaultsAPNSCaptureEnabledKey = @"com.flipboard.FLEX.capture_apns";
 NSString * const kFLEXDefaultsRegisterJSONExplorerKey = @"com.flipboard.FLEX.view_json_as_object";
@@ -73,18 +73,18 @@ NSString * const kFLEXDefaultsRegisterJSONExplorerKey = @"com.flipboard.FLEX.vie
     [self setBool:enabled forKey:kFLEXDefaultsNetworkObserverEnabledKey];
 }
 
-- (NSArray<NSString *> *)flex_networkHostDenylist {
-    return [NSArray arrayWithContentsOfFile:[
-        self flex_defaultsPathForFile:kFLEXDefaultsNetworkHostDenylistKey
-    ]] ?: @[];
-}
+//- (NSArray<NSString *> *)flex_networkHostDenylist {
+//    return [NSArray arrayWithContentsOfFile:[
+//        self flex_defaultsPathForFile:kFLEXDefaultsNetworkHostDenylistKey
+//    ]] ?: @[];
+//}
 
-- (void)setFlex_networkHostDenylist:(NSArray<NSString *> *)denylist {
-    NSParameterAssert(denylist);
-    [denylist writeToFile:[
-        self flex_defaultsPathForFile:kFLEXDefaultsNetworkHostDenylistKey
-    ] atomically:YES];
-}
+//- (void)setFlex_networkHostDenylist:(NSArray<NSString *> *)denylist {
+//    NSParameterAssert(denylist);
+//    [denylist writeToFile:[
+//        self flex_defaultsPathForFile:kFLEXDefaultsNetworkHostDenylistKey
+//    ] atomically:YES];
+//}
 
 - (BOOL)flex_registerDictionaryJSONViewerOnLaunch {
     return [self boolForKey:kFLEXDefaultsRegisterJSONExplorerKey];

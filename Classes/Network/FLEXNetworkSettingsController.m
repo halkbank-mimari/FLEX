@@ -23,7 +23,7 @@
 @property (nonatomic, readonly) UISlider *cacheLimitSlider;
 @property (nonatomic) UILabel *cacheLimitLabel;
 
-@property (nonatomic) NSMutableArray<NSString *> *hostDenylist;
+//@property (nonatomic) NSMutableArray<NSString *> *hostDenylist;
 @end
 
 @implementation FLEXNetworkSettingsController
@@ -32,7 +32,7 @@
     [super viewDidLoad];
     
     [self disableToolbar];
-    self.hostDenylist = FLEXNetworkRecorder.defaultRecorder.hostDenylist.mutableCopy;
+//    self.hostDenylist = FLEXNetworkRecorder.defaultRecorder.hostDenylist.mutableCopy;
     
     NSUserDefaults *defaults = NSUserDefaults.standardUserDefaults;
     
@@ -112,8 +112,8 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
-        case 0: return 5;
-        case 1: return self.hostDenylist.count;
+        case 0: return 4;
+        case 1: return 0;
         default: return 0;
     }
 }
@@ -121,7 +121,6 @@
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
     switch (section) {
         case 0: return @"General";
-        case 1: return @"Host Denylist";
         default: return nil;
     }
 }
@@ -162,10 +161,6 @@
                     cell.accessoryView = self.jsonViewerSwitch;
                     break;
                 case 3:
-                    cell.textLabel.text = @"Reset Host Denylist";
-                    cell.textLabel.textColor = tableView.tintColor;
-                    break;
-                case 4:
                     cell.textLabel.text = self.cacheLimitCellTitle;
                     self.cacheLimitLabel = cell.textLabel;
                     [self.cacheLimitSlider removeFromSuperview];
@@ -197,7 +192,7 @@
         
         // Denylist entries
         case 1: {
-            cell.textLabel.text = self.hostDenylist[indexPath.row];
+//            cell.textLabel.text = self.hostDenylist[indexPath.row];
             break;
         }
         
@@ -219,19 +214,19 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    [FLEXAlert makeAlert:^(FLEXAlert *make) {
-        make.title(@"Reset Host Denylist");
-        make.message(@"You cannot undo this action. Are you sure?");
-        make.button(@"Reset").destructiveStyle().handler(^(NSArray<NSString *> *strings) {
-            self.hostDenylist = nil;
-            [FLEXNetworkRecorder.defaultRecorder.hostDenylist removeAllObjects];
-            [FLEXNetworkRecorder.defaultRecorder synchronizeDenylist];
-            [self.tableView deleteSections:
-                [NSIndexSet indexSetWithIndex:1]
-            withRowAnimation:UITableViewRowAnimationAutomatic];
-        });
-        make.button(@"Cancel").cancelStyle();
-    } showFrom:self];
+//    [FLEXAlert makeAlert:^(FLEXAlert *make) {
+//        make.title(@"Reset Host Denylist");
+//        make.message(@"You cannot undo this action. Are you sure?");
+//        make.button(@"Reset").destructiveStyle().handler(^(NSArray<NSString *> *strings) {
+//            self.hostDenylist = nil;
+//            [FLEXNetworkRecorder.defaultRecorder.hostDenylist removeAllObjects];
+//            [FLEXNetworkRecorder.defaultRecorder synchronizeDenylist];
+//            [self.tableView deleteSections:
+//                [NSIndexSet indexSetWithIndex:1]
+//            withRowAnimation:UITableViewRowAnimationAutomatic];
+//        });
+//        make.button(@"Cancel").cancelStyle();
+//    } showFrom:self];
 }
 
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -242,10 +237,10 @@
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSParameterAssert(style == UITableViewCellEditingStyleDelete);
     
-    NSString *host = self.hostDenylist[indexPath.row];
-    [self.hostDenylist removeObjectAtIndex:indexPath.row];
-    [FLEXNetworkRecorder.defaultRecorder.hostDenylist removeObject:host];
-    [FLEXNetworkRecorder.defaultRecorder synchronizeDenylist];
+//    NSString *host = self.hostDenylist[indexPath.row];
+//    [self.hostDenylist removeObjectAtIndex:indexPath.row];
+//    [FLEXNetworkRecorder.defaultRecorder.hostDenylist removeObject:host];
+//    [FLEXNetworkRecorder.defaultRecorder synchronizeDenylist];
     
     [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
 }

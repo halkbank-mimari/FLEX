@@ -35,7 +35,7 @@ typedef NS_ENUM(NSUInteger, FLEXNetworkTransactionKind) {
 /// with an "image", "video", or "audio" prefix.
 @property (nonatomic) BOOL shouldCacheMediaResponses;
 
-@property (nonatomic) NSMutableArray<NSString *> *hostDenylist;
+//@property (nonatomic) NSMutableArray<NSString *> *hostDenylist;
 
 /// Call this after adding to or setting the \c hostDenylist to remove excluded transactions
 - (void)clearExcludedTransactions;

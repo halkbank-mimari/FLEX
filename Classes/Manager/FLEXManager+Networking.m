@@ -48,13 +48,13 @@
     FLEXNetworkRecorder.defaultRecorder.responseCacheByteLimit = networkResponseCacheByteLimit;
 }
 
-- (NSMutableArray<NSString *> *)networkRequestHostDenylist {
-    return FLEXNetworkRecorder.defaultRecorder.hostDenylist;
-}
+//- (NSMutableArray<NSString *> *)networkRequestHostDenylist {
+//    return FLEXNetworkRecorder.defaultRecorder.hostDenylist;
+//}
 
-- (void)setNetworkRequestHostDenylist:(NSMutableArray<NSString *> *)networkRequestHostDenylist {
-    FLEXNetworkRecorder.defaultRecorder.hostDenylist = networkRequestHostDenylist;
-}
+//- (void)setNetworkRequestHostDenylist:(NSMutableArray<NSString *> *)networkRequestHostDenylist {
+//    FLEXNetworkRecorder.defaultRecorder.hostDenylist = networkRequestHostDenylist;
+//}
 
 - (void)setCustomViewerForContentType:(NSString *)contentType
             viewControllerFutureBlock:(FLEXCustomContentViewerFuture)viewControllerFutureBlock {

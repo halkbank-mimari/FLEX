@@ -57,7 +57,7 @@ NSString *const kFLEXNetworkRecorderResponseCacheLimitDefaultsKey = @"com.flex.r
         self.orderedHTTPTransactions = [NSMutableArray new];
         self.orderedFirebaseTransactions = [NSMutableArray new];
         self.requestIDsToTransactions = [NSMutableDictionary new];
-        self.hostDenylist = NSUserDefaults.standardUserDefaults.flex_networkHostDenylist.mutableCopy;
+//        self.hostDenylist = NSUserDefaults.standardUserDefaults.flex_networkHostDenylist.mutableCopy;
 
         // Serial queue used because we use mutable objects that are not thread safe
         self.queue = dispatch_queue_create("com.flex.FLEXNetworkRecorder", DISPATCH_QUEUE_SERIAL);
@@ -155,37 +155,37 @@ NSString *const kFLEXNetworkRecorderResponseCacheLimitDefaultsKey = @"com.flex.r
     });
 }
 
-- (void)clearExcludedTransactions {
-    dispatch_sync(self.queue, ^{
-        self.orderedHTTPTransactions = ({
-            [self.orderedHTTPTransactions flex_filtered:^BOOL(FLEXHTTPTransaction *ta, NSUInteger idx) {
-                NSString *host = ta.request.URL.host;
-                for (NSString *excluded in self.hostDenylist) {
-                    if ([host hasSuffix:excluded]) {
-                        return NO;
-                    }
-                }
-                
-                return YES;
-            }];
-        });
-    });
-}
+//- (void)clearExcludedTransactions {
+//    dispatch_sync(self.queue, ^{
+//        self.orderedHTTPTransactions = ({
+//            [self.orderedHTTPTransactions flex_filtered:^BOOL(FLEXHTTPTransaction *ta, NSUInteger idx) {
+//                NSString *host = ta.request.URL.host;
+//                for (NSString *excluded in self.hostDenylist) {
+//                    if ([host hasSuffix:excluded]) {
+//                        return NO;
+//                    }
+//                }
+//                
+//                return YES;
+//            }];
+//        });
+//    });
+//}
 
-- (void)synchronizeDenylist {
-    NSUserDefaults.standardUserDefaults.flex_networkHostDenylist = self.hostDenylist;
-}
+//- (void)synchronizeDenylist {
+//    NSUserDefaults.standardUserDefaults.flex_networkHostDenylist = self.hostDenylist;
+//}
 
 #pragma mark - Network Events
 
 - (void)recordRequestWillBeSentWithRequestID:(NSString *)requestID
                                      request:(NSURLRequest *)request
                             redirectResponse:(NSURLResponse *)redirectResponse {
-    for (NSString *host in self.hostDenylist) {
-        if ([request.URL.host hasSuffix:host]) {
-            return;
-        }
-    }
+//    for (NSString *host in self.hostDenylist) {
+//        if ([request.URL.host hasSuffix:host]) {
+//            return;
+//        }
+//    }
     
     FLEXHTTPTransaction *transaction = [FLEXHTTPTransaction request:request identifier:requestID];
 
